@@ -1,20 +1,19 @@
 #!/bin/bash
 
-"""
-Created this script to check the memory usage of a certain PID
-when that PID existed. The output was directed to a log file
-I identified when running the command. At the time, we were
-investigating why the process for the crime site script was
-getting killed before it completed.
-"""
+# Created this script to check the memory usage of a certain PID
+# when that PID existed. The output was directed to a log file
+# I identified when running the command. At the time, we were
+# investigating why the process for the crime site script was
+# getting killed before it completed.
 
-PID_FILE="/tmp/crime_test_update.pid"
+PID_FILE="/tmp/example.pid"
 
 echo begin at `date`
 
 while [[ -e $PID_FILE ]]; do
-  # While the PID for crimes exists, check memory
+  # While the PID for crimes exists, check memory usage.
   PID=$(cat ${PID_FILE});
+  # Format our date nicely.
   NOW=$(date +"%Y%m%dT%H%M%S");
   memory_check=`ps -p $PID -o rss | tail -n 1`
   echo -n $memory_check
