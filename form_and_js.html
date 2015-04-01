@@ -1,0 +1,72 @@
+<script Language="JavaScript">
+
+/**
+    * Super quick JS form that does a simple calculation.
+    * Heavily cribbed this more complicated example:
+    * http://www.ryerson.ca/JavaScript/lectures/forms/fixedAnnuity/index.html
+    **/
+
+/**
+    * Function that returns the selected value
+    * after being passed a reference to a single choice
+    * selection list.
+    **/
+function getSelectedValue(selectList){
+    return selectList[selectList.selectedIndex].value;
+}
+
+/**
+    * Function to calculate how much the Exelon bailout will cost you.
+    * Takes a user's monthly electricity usage, multiplies it by 60, and then
+    * multiples by a value associated with the specific utility company.
+    * We turn the values into floats, check that they are positive float values,
+    * and if they are not, we return an error to the user.
+    * If the values check out, then we return the result of the maths to the user
+    * after some rounding.
+    **/
+function calculateTotal(frm){
+    var usage = frm.usage.value;
+    var utility = parseFloat(getSelectedValue(frm.utility));
+   
+    if (!parseFloat(usage) || parseFloat(usage) <= 0) {
+        frm.total.value = "Error";
+        alert("Please enter a positive number in the 'Monthly electricity usage' field.");
+    } else {
+        frm.total.value = Number((parseFloat(usage) * 60 * utility).toFixed(2));
+    }
+}
+
+</script>
+
+<h2>Exelon Bailout Calculator</h2>
+  <p>(How much will the Exelon Bailout cost you?)</p>
+<form method="post" action="">
+  <table border="0" cellspacing="0" cellpadding="3">
+    <tr>
+      <td align="right">Monthly electricity usage:</td>
+      <td><input type="text" name="usage" size="12" maxlength="30"></td>
+    </tr>
+       <tr>
+      <td align="right">Electric Utility:</td>
+      <td>
+        <select name="utility">
+           <option value=".00315">Ameren</OPTION>
+           <option value=".0034">ComEd</OPTION>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center">
+          <input type="button" name="Button" value="Calculate Your Cost" onClick="calculateTotal(this.form)">
+          <hr size="1" noshade>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">Your Bailout Cost:</td>
+      <td>
+        <input type="text" name="total" size="30" maxlength="30">
+      </td>
+    </tr>
+  </table>
+
+</form>
