@@ -26,13 +26,15 @@ function getSelectedValue(selectList){
     **/
 function calculateTotal(frm){
     var usage = frm.usage.value;
+    usage = parseFloat(usage.replace(/[^\d\.\-\ ]/g, ''));
     var utility = parseFloat(getSelectedValue(frm.utility));
    
-    if (!parseFloat(usage) || parseFloat(usage) <= 0) {
+    if (!usage || usage <= 0) {
         frm.total.value = "Error";
         alert("Please enter a positive number in the 'Monthly electricity usage' field.");
     } else {
-        frm.total.value = Number((parseFloat(usage) * 60 * utility).toFixed(2));
+        calculated_total = Number((parseFloat(usage) * 60 * utility).toFixed(2));
+        frm.total.value = calculated_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 }
 
